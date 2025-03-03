@@ -17,33 +17,36 @@ const WizardProgress: React.FC<WizardProgressProps> = ({ steps, currentStep }) =
                 {steps.map((step, index) => (
                     <li key={step.title} className="relative flex-1">
                         {/* Progress Bar */}
-                        {index !== 0 && (
-                            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div
-                                    className={`h-0.5 w-full ${index <= currentStep ? "bg-blue-600" : "bg-gray-200"}`}
-                                />
-                            </div>
-                        )}
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div
+                                className={`h-0.5 w-full ${
+                                    index <= currentStep ? "bg-blue-600" : "bg-gray-200"
+                                }`}
+                                style={{ marginLeft: index === 0 ? "50%" : "0" }} // Hide left part for index 0
+                            />
+                        </div>
+
                         {/* Step Indicator */}
                         <div className="relative flex items-center justify-center">
-              <span className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white">
-                {index < currentStep ? (
-                    <Check className="h-5 w-5 text-blue-600" />
-                ) : index === currentStep ? (
-                    <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
-                ) : (
-                    <span className="h-2.5 w-2.5 rounded-full bg-gray-200" />
-                )}
-              </span>
+          <span className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white">
+            {index < currentStep ? (
+                <Check className="h-5 w-5 text-blue-600" />
+            ) : index === currentStep ? (
+                <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
+            ) : (
+                <span className="h-2.5 w-2.5 rounded-full bg-gray-200" />
+            )}
+          </span>
                             {/* Step Title */}
                             <span className="absolute -bottom-6 text-sm font-medium text-gray-500">
-                {step.title}
-              </span>
+            {step.title}
+          </span>
                         </div>
                     </li>
                 ))}
             </ol>
         </nav>
+
     );
 };
 

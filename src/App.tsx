@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import CreateTest from './pages/CreateTest';
 import TestView from './pages/TestView';
 import TestEdit from './pages/TestEdit';
+import TestWindow from "./pages/TestWindow.tsx";
 
 // Protected route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -43,6 +44,7 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/test-window" element={<TestWindow/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         
