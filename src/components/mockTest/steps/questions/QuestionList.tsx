@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trash2, Code, ListChecks } from 'lucide-react';
+import { Edit2,Trash2, Code, ListChecks } from 'lucide-react';
 
 interface Question {
     id: string;
@@ -10,9 +10,10 @@ interface Question {
 interface QuestionListProps {
     questions: Question[];
     onDelete: (id: string) => void;
+    onEdit: (question: Question) => void;
 }
 
-const QuestionList: React.FC<QuestionListProps> = ({ questions, onDelete }) => {
+const QuestionList: React.FC<QuestionListProps> = ({ questions, onDelete,onEdit }) => {
     if (questions.length === 0) {
         return (
             <div className="text-center py-6 text-gray-500">
@@ -43,12 +44,18 @@ const QuestionList: React.FC<QuestionListProps> = ({ questions, onDelete }) => {
                             </p>
                         </div>
                     </div>
-                    <button
-                        onClick={() => onDelete(question.id)}
-                        className="text-red-600 hover:text-red-700"
-                    >
-                        <Trash2 size={18} />
-                    </button>
+                   <div className={"flex flex-row  gap-2"}> <button
+                       onClick={() => onEdit(question)}
+                       className="p-1 text-gray-500 hover:text-blue-600"
+                   >
+                       <Edit2 size={16} />
+                   </button>
+                       <button
+                           onClick={() => onDelete(question.id)}
+                           className="text-red-600 hover:text-red-700"
+                       >
+                           <Trash2 size={18} />
+                       </button></div>
                 </div>
             ))}
         </div>

@@ -33,3 +33,27 @@ export interface UserAuth {
     accessCode: string;
     isAuthenticated: boolean;
 }
+export interface Ranking {
+    userId: string;
+    userName: string;
+    profilePicture?: string;
+    organization?: string;
+    totalScore: number;
+    testsCompleted: number;
+    averageScore: number;
+    rank: number;
+}
+export interface TestResult {
+    id: string;
+    testId: string;
+    userId: string;
+    score: number;
+    maxScore: number;
+    submittedAt: Date;
+    completionTime: number; // in seconds
+    answers: {
+        questionId: string;
+        answer: string | number;
+        isCorrect: boolean;
+    }[];
+}

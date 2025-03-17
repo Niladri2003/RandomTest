@@ -5,7 +5,8 @@ import 'react-quill/dist/quill.snow.css';
 interface QuestionBasicFieldsProps {
     title: string;
     description: string;
-    timeLimit: number;
+    timeLimit?: number;
+    explanation: string;
     onChange: (field: string, value: string | number) => void;
 }
 
@@ -13,9 +14,12 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
                                                                      title,
                                                                      description,
                                                                      timeLimit,
+                                                                     explanation,
                                                                      onChange
                                                                  }) => {
     const [editorDescription, setEditorDescription] = useState(description);
+    const [editorExplanation, setEditorExplanation] = useState(explanation);
+
     // Function to handle image upload to the editor (you can extend this to upload images to a server)
     const handleImageUpload = (file: any) => {
         const reader = new FileReader();
@@ -64,9 +68,9 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
     // };
 
     return (
-        <>
+        <div className={"flex flex-col gap-2"}>
             <div>
-                <label className="block text-sm font-medium text-gray-700">Title</label>
+                <label className="block text-sm font-medium text-gray-700">Title of the question</label>
                 <input
                     type="text"
                     value={title}
@@ -76,34 +80,49 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
                 />
             </div>
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <ReactQuill
-                    value={editorDescription}
-                    onChange={(content) => {
-                        setEditorDescription(content);
-                        onChange('description', content);
-                    }}
-                    modules={modules}
-                    className="h-[300px]"
+           <div className={"flex flex-col gap-8"}>
+               <div>
+                   <label className="block text-sm font-medium text-gray-700">Description</label>
+                   <ReactQuill
+                       value={editorDescription}
+                       onChange={(content) => {
+                           setEditorDescription(content);
+                           onChange('description', content);
+                       }}
+                       modules={modules}
+                       className="h-[300px]"
 
-                />
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mt-20">Time Limit (minutes)</label>
+                   />
+               </div>
+               <div>
+                   <label className="block text-sm font-medium text-gray-700 mt-4">Explanation of Ans</label>
+                   <ReactQuill
+                       value={editorExplanation}
+                       onChange={(content) => {
+                           setEditorExplanation(content);
+                           onChange('explanation', content);
+                       }}
+                       modules={modules}
+                       className="h-[150px]"
+                   />
+               </div>
+           </div>
+            <div className="mt-20">
+                <label className="block text-sm font-medium text-gray-700 ">Time Limit (minutes) (Optional)</label>
                 <input
                     type="number"
-                    value={timeLimit}
-                    onChange={(e) => onChange('timeLimit', Number(e.target.value))}
+                    value={timeLimit !== undefined ? timeLimit : ''} // Show empty if undefined
+                    onChange={(e) => {
+                        const value = e.target.value ? Number(e.target.value) : undefined;
+                        onChange('timeLimit', value);
+                    }}
                     min="1"
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 bg-white text-black"
-                    required
                 />
             </div>
+        </div>
 
 
-        </>
     );
 };
 

@@ -26,6 +26,7 @@ interface AddQuestionsProps {
 const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onBack }) => {
     const [isAddingQuestion, setIsAddingQuestion] = useState<boolean>(false);
     const [selectedSection, setSelectedSection] = useState<number>(0);
+    const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleAddQuestion = (question: Question) => {
@@ -41,6 +42,21 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
 
         onUpdate({ sections: updatedSections });
         setIsAddingQuestion(false);
+    };
+
+    const handleEditQuestion = (question: Question) => {
+        const updatedSections = data.sections.map((section, index) => {
+            if (index === selectedSection) {
+                return {
+                    ...section,
+                    questions: section.questions.map((q) => (q.id === question.id ? question : q))
+                };
+            }
+            return section;
+        });
+
+        onUpdate({ sections: updatedSections });
+        setEditingQuestion(null);
     };
 
     const handleSaveDraft = async (question: Question) => {
@@ -91,7 +107,7 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                 </select>
             </div>
 
-            {!isAddingQuestion ? (
+            {!isAddingQuestion && !editingQuestion ? (
                 <div className="space-y-4">
                     <QuestionList
                         questions={data.sections[selectedSection].questions}
@@ -106,6 +122,10 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                                 return section;
                             });
                             onUpdate({ sections: updatedSections });
+                        }}
+                        onEdit={(question) => {
+                            setEditingQuestion(question);
+                            setIsAddingQuestion(true);
                         }}
                     />
                     <button
@@ -132,9 +152,13 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                 </div>
             ) : (
                 <QuestionForm
-                    onSubmit={handleAddQuestion}
-                    onCancel={() => setIsAddingQuestion(false)}
+                    onSubmit={editingQuestion ? handleEditQuestion : handleAddQuestion}
+                    onCancel={() => {
+                        setIsAddingQuestion(false);
+                        setEditingQuestion(null);
+                    }}
                     onSaveDraft={handleSaveDraft}
+                    initialData={editingQuestion}
                 />
             )}
 

@@ -11,7 +11,7 @@ const LandingPage: React.FC = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
+      <section className="bg-gradient-to-r from-[#205781] to-[#4F959D] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-10 md:mb-0">
@@ -171,14 +171,14 @@ const LandingPage: React.FC = () => {
       </section>
       
       {/* CTA Section */}
-      <section className="bg-indigo-600 text-white py-16">
+      <section className="bg-gradient-to-r from-[#4F959D] to-[#4F959D] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Testing Process?</h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
             Join thousands of educators and employers who use TestCraft to create engaging assessments.
           </p>
           <Link to="/signup">
-            <Button size="lg" className="bg-white text-indigo-600 hover:bg-gray-100">
+            <Button size="lg" className="bg-[#205781] text-indigo-600 hover:bg-[#205780]">
               Get Started for Free
             </Button>
           </Link>

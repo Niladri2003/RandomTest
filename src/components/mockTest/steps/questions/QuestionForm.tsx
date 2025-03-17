@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CodingQuestionForm from './CodingQuestionForm';
 import MCQQuestionForm from './MCQQuestionsForm';
 
+interface Question {
+    id: string;
+    title: string;
+    type: 'coding' | 'mcq';
+}
 interface QuestionFormProps {
-    onSubmit: (question: any) => void;
-    onSaveDraft: (question: any) => void;
+    onSubmit: (question: never) => void;
+    onSaveDraft: (question: never) => void;
     onCancel: () => void;
+    initialData?: Question | null;
 }
 
-const QuestionForm: React.FC<QuestionFormProps> = ({ onSubmit, onCancel,onSaveDraft }) => {
+const QuestionForm: React.FC<QuestionFormProps> = ({ onSubmit, onCancel,onSaveDraft,initialData }) => {
     const [questionType, setQuestionType] = useState<string>('coding');
-
+    useEffect(() => {
+        if (initialData) {
+            setQuestionType(initialData.type);
+        }
+    }, [initialData]);
     return (
         <div className="space-y-6">
             <div>
@@ -28,9 +38,9 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onSubmit, onCancel,onSaveDr
             </div>
 
             {questionType === 'coding' ? (
-                <CodingQuestionForm onSubmit={onSubmit} onCancel={onCancel} />
+                <CodingQuestionForm onSubmit={onSubmit} onCancel={onCancel} initialData={initialData} />
             ) : (
-                <MCQQuestionForm onSubmit={onSubmit} onCancel={onCancel} />
+                <MCQQuestionForm onSubmit={onSubmit} onCancel={onCancel} initialData={initialData} />
             )}
         </div>
     );

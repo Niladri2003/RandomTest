@@ -1,39 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import FormActions from "./form-fields/FormActions";
 import QuestionBasicFields from "./form-fields/QuestionBasicFields";
 import MCQOptions from "./form-fields/MCQOptions";
+
 
 interface MCQQuestionsFormProps {
     onSubmit: (question: Question) => void;
     onCancel: () => void;
     onSaveDraft: (question: Question) => Promise<void>;
+    initialData?: Question | null;
 }
 
 interface Question {
+    id: string;
     title: string;
     description: string;
     type: string;
     options: string[];
     correctAnswer: string;
-    timeLimit: number;
+    explanation: string;
+    timeLimit?: number;
 }
 
-const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel, onSaveDraft }) => {
+const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel, onSaveDraft,initialData }) => {
     const [question, setQuestion] = useState<Question>({
+        id: Date.now().toString(),
         title: '',
         description: '',
         type: 'mcq',
         options: [''],
         correctAnswer: '',
-        timeLimit: 5,
+        explanation: '',
+        timeLimit: undefined,
     });
     const [saving, setSaving] = useState<boolean>(false);
-
+    useEffect(() => {
+        if (initialData) {
+            setQuestion(initialData);
+        }
+    }, [initialData]);
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (onSubmit && question.title) {
-            onSubmit(question);
+            const cleanedQuestion = {
+                ...question,
+                timeLimit: question.timeLimit !== undefined ? question.timeLimit : undefined, // Ensure undefined is handled correctly
+            };
+            onSubmit(cleanedQuestion);
         }
+
     };
 
     const handleSaveDraft = async () => {
@@ -70,6 +85,7 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
             <QuestionBasicFields
                 title={question.title || ''}
                 description={question.description || ''}
+                explanation={question.explanation || ''}
                 onChange={(field, value) => setQuestion(prev => ({ ...prev, [field]: value }))}
             />
             <MCQOptions
