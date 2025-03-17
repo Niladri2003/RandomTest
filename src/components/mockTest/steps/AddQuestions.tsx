@@ -28,6 +28,8 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
     const [selectedSection, setSelectedSection] = useState<number>(0);
     const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isExcelProcessing, setIsExcelProcessing] = useState<boolean>(false);
+    const [excelError, setExcelError] = useState<string | null>(null);
 
     const handleAddQuestion = (question: Question) => {
         console.log("ADdddingggg");
@@ -72,23 +74,34 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-
+        setIsExcelProcessing(true);
         try {
+            console.log("working on excel")
+
+            console.log(isExcelProcessing)
+            setExcelError(null); // Clear previous error
             const questions = await parseExcelQuestions(file);
-            console.log(questions);
             const updatedSections = data.sections.map((section, index) => {
                 if (index === selectedSection) {
                     return {
                         ...section,
-                        questions: [...section.questions, ...questions.map(q => ({ ...q, id: Date.now().toString() }))]
+                        questions: [...section.questions, ...questions.map(q => ({ ...q, id: Date.now()+Math.random().toString() }))]
                     };
                 }
                 return section;
             });
 
             onUpdate({ sections: updatedSections });
+            // **Reset file input field**
+            e.target.value = "";
+            setIsExcelProcessing(false);
         } catch (error) {
+            setExcelError(error.message || "Failed to process the Excel file. Please check the format.");
             console.error('Error parsing Excel file:', error);
+            e.target.value = "";
+        }finally {
+            e.target.value = "";
+            setIsExcelProcessing(false);
         }
     };
 
@@ -144,13 +157,39 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                         <PlusCircle size={20} />
                         Add Question Manually
                     </button>
-                    <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className="flex-1 flex items-center justify-center gap-2 p-4 border-2 border-dashed rounded-md text-gray-500 hover:text-gray-700 hover:border-gray-400"
-                    >
-                        <FileSpreadsheet size={20} />
-                        Upload Excel File
-                    </button>
+                   <div className={"flex flex-row w-[30%] gap-4"}>
+                       <button
+                           onClick={() => fileInputRef.current?.click()}
+                           className="flex-1 flex items-center justify-center gap-2 p-4 border-2 border-dashed rounded-md text-gray-500 hover:text-gray-700 hover:border-gray-400"
+                           disabled={isExcelProcessing} // Disable button while processing
+                       >
+                           <FileSpreadsheet size={20} />
+
+                           {isExcelProcessing ? (
+                               <>
+                                   <svg className="animate-spin h-5 w-5 text-gray-600" viewBox="0 0 24 24">
+                                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                       <path className="opacity-75" fill="currentColor"
+                                             d="M4 12a8 8 0 018-8v4l3-3-3-3V4a8 8 0 00-8 8h4z"></path>
+                                   </svg>
+                                   <span> Processing...</span>
+                               </>
+                           ) : (
+                               "Upload Excel File"
+                           )}
+                       </button>
+                       <a
+                           href="/mnt/data/sample_questions.xlsx"
+                           download="sample_questions.xlsx"
+                           className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                       >
+                           Download Demo Excel File
+                       </a>
+                   </div>
+
+                    {
+                        excelError && <div className="text-red-500">{excelError}</div>
+                    }
                     <input
                         ref={fileInputRef}
                         type="file"

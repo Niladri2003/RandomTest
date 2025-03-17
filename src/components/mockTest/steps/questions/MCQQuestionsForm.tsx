@@ -1,8 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormActions from "./form-fields/FormActions";
 import QuestionBasicFields from "./form-fields/QuestionBasicFields";
 import MCQOptions from "./form-fields/MCQOptions";
-
 
 interface MCQQuestionsFormProps {
     onSubmit: (question: Question) => void;
@@ -22,7 +21,7 @@ interface Question {
     timeLimit?: number;
 }
 
-const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel, onSaveDraft,initialData }) => {
+const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel, onSaveDraft, initialData }) => {
     const [question, setQuestion] = useState<Question>({
         id: Date.now().toString(),
         title: '',
@@ -34,11 +33,10 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
         timeLimit: undefined,
     });
     const [saving, setSaving] = useState<boolean>(false);
-    useEffect(() => {
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+    useEffect(() => {
         if (initialData) {
-            console.log("DES",initialData.description);
-            console.log("DES",initialData.explanation);
             setQuestion({
                 ...initialData,
                 description: initialData.description || '',
@@ -46,7 +44,6 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
                 options: initialData.options.length > 0 ? initialData.options : [''],
             });
         } else {
-            // Reset to a blank question when adding a new one
             setQuestion({
                 id: Date.now().toString(),
                 title: '',
@@ -60,23 +57,29 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
         }
     }, [initialData]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        // console.log(question)
-        e.preventDefault();
-        console.log("Adding Question");
-        if (onSubmit && question.title) {
+    const validate = () => {
+        const newErrors: { [key: string]: string } = {};
+        if (!question.title) newErrors.title = 'Title is required';
+        if (!question.description) newErrors.description = 'Description is required';
+        if (!question.options.length) newErrors.options = 'At least one option is required';
+        if (!question.correctAnswer) newErrors.correctAnswer = 'Correct answer is required';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validate()) {
             const cleanedQuestion = {
                 ...question,
-                timeLimit: question.timeLimit !== undefined ? question.timeLimit : undefined, // Ensure undefined is handled correctly
+                timeLimit: question.timeLimit !== undefined ? question.timeLimit : undefined,
             };
             onSubmit(cleanedQuestion);
         }
-
     };
 
     const handleSaveDraft = async () => {
-        if (onSaveDraft && question.title) {
+        if (question.title) {
             setSaving(true);
             try {
                 await onSaveDraft(question);
@@ -112,6 +115,8 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
                 explanation={question.explanation || ''}
                 onChange={(field, value) => setQuestion(prev => ({ ...prev, [field]: value }))}
             />
+            {errors.title && <p className="text-red-600">{errors.title}</p>}
+            {errors.description && <p className="text-red-600">{errors.description}</p>}
             <MCQOptions
                 options={question.options || []}
                 correctAnswer={question.correctAnswer || ''}
@@ -120,11 +125,13 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
                 onOptionRemove={handleOptionRemove}
                 onCorrectAnswerChange={(answer) => setQuestion(prev => ({ ...prev, correctAnswer: answer }))}
             />
+            {errors.options && <p className="text-red-600">{errors.options}</p>}
+            {errors.correctAnswer && <p className="text-red-600">{errors.correctAnswer}</p>}
             <FormActions
                 onCancel={onCancel}
                 onSaveDraft={handleSaveDraft}
                 saving={saving}
-                disabled={!question.title || !question.description || !question.options?.length || !question.correctAnswer}
+
             />
         </form>
     );
