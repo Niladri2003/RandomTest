@@ -35,13 +35,37 @@ const MCQQuestionsForm: React.FC<MCQQuestionsFormProps> = ({ onSubmit, onCancel,
     });
     const [saving, setSaving] = useState<boolean>(false);
     useEffect(() => {
+
         if (initialData) {
-            setQuestion(initialData);
+            console.log("DES",initialData.description);
+            console.log("DES",initialData.explanation);
+            setQuestion({
+                ...initialData,
+                description: initialData.description || '',
+                explanation: initialData.explanation || '',
+                options: initialData.options.length > 0 ? initialData.options : [''],
+            });
+        } else {
+            // Reset to a blank question when adding a new one
+            setQuestion({
+                id: Date.now().toString(),
+                title: '',
+                description: '',
+                type: 'mcq',
+                options: [''],
+                correctAnswer: '',
+                explanation: '',
+                timeLimit: undefined,
+            });
         }
     }, [initialData]);
+
     const handleSubmit = (e: React.FormEvent) => {
+        // console.log(question)
         e.preventDefault();
+        console.log("Adding Question");
         if (onSubmit && question.title) {
+
             const cleanedQuestion = {
                 ...question,
                 timeLimit: question.timeLimit !== undefined ? question.timeLimit : undefined, // Ensure undefined is handled correctly

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -17,8 +17,17 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
                                                                      explanation,
                                                                      onChange
                                                                  }) => {
-    const [editorDescription, setEditorDescription] = useState(description);
-    const [editorExplanation, setEditorExplanation] = useState(explanation);
+    const [editorDescription, setEditorDescription] = useState<string>(description);
+    const [editorExplanation, setEditorExplanation] = useState<string>(explanation);
+
+    useEffect(() => {
+        setEditorDescription(description); // Update when props change
+    }, [description]);
+
+    useEffect(() => {
+        setEditorExplanation(explanation); // Update when props change
+    }, [explanation]);
+
 
     // Function to handle image upload to the editor (you can extend this to upload images to a server)
     const handleImageUpload = (file: any) => {

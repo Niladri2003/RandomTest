@@ -30,6 +30,7 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleAddQuestion = (question: Question) => {
+        console.log("ADdddingggg");
         const updatedSections = data.sections.map((section, index) => {
             if (index === selectedSection) {
                 return {
@@ -45,6 +46,8 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
     };
 
     const handleEditQuestion = (question: Question) => {
+        console.log("hello editing");
+        console.log("Djjj",editingQuestion)
         const updatedSections = data.sections.map((section, index) => {
             if (index === selectedSection) {
                 return {
@@ -57,6 +60,7 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
 
         onUpdate({ sections: updatedSections });
         setEditingQuestion(null);
+        setIsAddingQuestion(false);
     };
 
     const handleSaveDraft = async (question: Question) => {
@@ -125,11 +129,16 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                         }}
                         onEdit={(question) => {
                             setEditingQuestion(question);
-                            setIsAddingQuestion(true);
+                            setIsAddingQuestion(false); // Reset before opening
+                            setTimeout(() => setIsAddingQuestion(true), 0); // Delay opening to ensure state updates
                         }}
                     />
                     <button
-                        onClick={() => setIsAddingQuestion(true)}
+                        onClick={() => {
+                            setEditingQuestion(null); // Reset editing mode
+                            setIsAddingQuestion(false); // Ensure proper re-render
+                            setTimeout(() => setIsAddingQuestion(true), 0); // Delay to allow state update
+                        }}
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
                     >
                         <PlusCircle size={20} />
@@ -154,8 +163,8 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                 <QuestionForm
                     onSubmit={editingQuestion ? handleEditQuestion : handleAddQuestion}
                     onCancel={() => {
-                        setIsAddingQuestion(false);
                         setEditingQuestion(null);
+                        setIsAddingQuestion(false);
                     }}
                     onSaveDraft={handleSaveDraft}
                     initialData={editingQuestion}
