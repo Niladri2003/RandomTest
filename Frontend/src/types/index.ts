@@ -45,6 +45,7 @@ export interface TestResult {
   score: number;
   maxScore: number;
   submittedAt: Date;
+  completionTime: number; // in seconds
   answers: {
     questionId: string;
     answer: string | number;
@@ -67,4 +68,14 @@ export interface TestData{
       type: 'coding' | 'mcq';
     }[];
   }[];
+}
+export interface Ranking {
+  userId: string;
+  userName: string;
+  profilePicture?: string;
+  organization?: string;
+  totalScore: number;
+  testsCompleted: number;
+  averageScore: number;
+  rank: number;
 }

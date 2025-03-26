@@ -5,17 +5,16 @@ export const axiosInstance = axios.create({});
 export const apiConnector = async (
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     url: string,
-    bodyData?: never,
+    bodyData?: Record<string, any>,
     headers?: Record<string, string>,
-    params?: Record<string, never>
+    params?: Record<string, any>
 ): Promise<AxiosResponse<never>> => {
-    // @ts-expect-error
     const config: AxiosRequestConfig = {
         method,
         url,
         data: bodyData || null,
-        headers: headers || null,
-        params: params || null,
+        headers: headers || undefined,
+        params: params || undefined,
     };
 
     return axiosInstance(config);

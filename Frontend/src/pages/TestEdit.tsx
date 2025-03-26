@@ -522,7 +522,7 @@ const TestEdit: React.FC = () => {
         </div>
       )}
       
-      <Footer />
+
     </div>
   );
 };

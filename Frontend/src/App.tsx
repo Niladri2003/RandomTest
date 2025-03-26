@@ -13,6 +13,10 @@ import TestEdit from './pages/TestEdit';
 import TestWindow from "./pages/TestWindow.tsx";
 import RankingPage from "./pages/RankingPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import AuthCallback from "./pages/AuthCallback.tsx";
+
+import {DashboardLayout}  from "./pages/index.ts"
+import RoleBasedRoutes from "./Routing/RoleBasedRoutes.tsx";
 
 // Protected route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -41,6 +45,8 @@ const TeacherRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+    const { isAuthenticated } = useAuthStore();
+    // console.log(RoleBasedRoutes)
   return (
     <Router>
       <Routes>
@@ -51,50 +57,52 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/ranking" element={<RankingPage />} />
+        <Route path="/auth/callback" element={<AuthCallback/>} />
 
-        {/* Protected routes */}
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        
-        <Route 
-          path="/create-test" 
-          element={
-            <TeacherRoute>
-              <CreateTest />
-            </TeacherRoute>
-          } 
-        />
-        
-        <Route 
-          path="/test/:id/edit" 
-          element={
-            <TeacherRoute>
-              <TestEdit />
-            </TeacherRoute>
-          } 
-        />
-        
-        <Route 
-          path="/test/:id" 
-          element={
-            <ProtectedRoute>
-              <TestView />
-            </ProtectedRoute>
-          } 
-        />
-          <Route path={"/profile"} element={
-              <ProtectedRoute>
-                  <ProfilePage/>
-              </ProtectedRoute>
-          } />
-        
-        {/* Fallback route */}
+         Protected routes
+          {/* Dashboard routes using layout + nested routing */}
+          <Route
+              path="/"
+              element={
+                  <ProtectedRoute>
+                      <DashboardLayout />
+                  </ProtectedRoute>
+              }
+          >
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="test/:id" element={<TestView />} />
+              <Route
+                  path="test/:id/edit"
+                  element={
+                      <TeacherRoute>
+                          <TestEdit />
+                      </TeacherRoute>
+                  }
+              />
+              <Route
+                  path="create-test"
+                  element={
+                      <TeacherRoute>
+                          <CreateTest />
+                      </TeacherRoute>
+                  }
+              />
+          </Route>
+        {/*  <Route*/}
+        {/*      path="/*"*/}
+        {/*      element={*/}
+        {/*          <ProtectedRoute>*/}
+        {/*              <DashboardLayout>*/}
+        {/*                  <RoleBasedRoutes />*/}
+        {/*              </DashboardLayout>*/}
+        {/*          </ProtectedRoute>*/}
+        {/*      }*/}
+        {/*  />*/}
+
+
+
+          {/* Fallback route */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

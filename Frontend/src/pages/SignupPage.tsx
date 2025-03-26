@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import Navbar from '../components/Navbar';
@@ -6,6 +6,8 @@ import Footer from '../components/Footer';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { BookOpen } from 'lucide-react';
+import {useAppDispatch,useAppSelector} from "../hooks/redux.ts";
+import { signup, clearError } from '../store/slices/authSlice';
 
 const SignupPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -14,9 +16,22 @@ const SignupPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<'teacher' | 'student'>('teacher');
   const [error, setError] = useState('');
-  
-  const { signup, isLoading } = useAuthStore();
+  const dispatch = useAppDispatch();
+
+  const { isAuthenticated, isLoading } = useAppSelector(state => state.auth);
   const navigate = useNavigate();
+  //clear any existing errors when component mounts
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
+  // Redirect to dashboard if user is already authenticated
+    useEffect(() => {
+        if (isAuthenticated) {
+        navigate('/dashboard');
+        }
+    }, [isAuthenticated, navigate]);
+
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +43,30 @@ const SignupPage: React.FC = () => {
     }
     
     try {
-      await signup(name, email, password, role);
+
+      const resp=await dispatch(signup({ name, email, password,confirmPassword, role }));
+      console.log("Signup",resp);
       navigate('/dashboard');
     } catch (err) {
       setError('Failed to create account. Please try again.');
     }
+  };
+  const GoogleLoginButton=() =>{
+    const handleGoogleLogin=()=>{
+      window.location.href="http://localhost:3000/api/v1/auth/google";
+    };
+    return(<button
+        onClick={handleGoogleLogin}
+        className="mt-4 w-full py-2 px-4 border border-gray-300 rounded-md flex items-center justify-center bg-white hover:bg-gray-100"
+    >
+      <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          alt="Google"
+          className="w-5 h-5 mr-2"
+      />
+      Continue with Google
+    </button>
+  );
   };
   
   return (
@@ -136,7 +170,7 @@ const SignupPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+            <GoogleLoginButton />
             <Button
               type="submit"
               fullWidth

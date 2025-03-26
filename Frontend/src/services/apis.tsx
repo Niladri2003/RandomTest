@@ -1,26 +1,14 @@
-const BASE_URL = 'http://localhost:4000/api/v1';
+export const BASE_URL = 'http://localhost:3000/api/v1';
+
 
 interface AuthEndpoints {
+    SIGN_UP_API: string;
     LOGIN_API: string;
     CHANGE_PASSWORD_API: string;
     RESET_PASSWORD_API: string;
     FORGOT_PASSWORD_API: string;
     GET_USER_DATA: string;
-}
 
-interface CompanyEndpoints {
-    ADD_COMPANY: string;
-    GET_COMPANY: string;
-    DELETE_COMPANY: string;
-    UPDATE_COMPANY: string;
-}
-
-interface QueryEndpoints {
-    SUBMIT_QUERY: string;
-    GET_USER_QUERY: string;
-    GET_ADMIN_QUERY: string;
-    ADMIN_QUERY_UPDATE: string;
-    ADMIN_QUERY_RESOLVE: string;
 }
 
 interface MockTestEndpoints {
@@ -88,45 +76,18 @@ interface PaymentEndpoints {
     SEND_BULK_EMAILS: string;
 }
 
-interface StudyMaterialEndpoints {
-    GET_PUBLIC_NOTES: string;
-    GET_PURCHASED_NOTES: string;
-    UPLOAD_NOTES: string;
-    GET_ALL_NOTES_ADMIN: string;
-    STREAM_PDF: string;
-    GET_NOTES_BY_ID: string;
-    ARCHIVE_NOTE_API: string;
-}
 
-interface WebinarEndpoints {
-    GET_PUBLIC_WEBINAR: string;
-    GET_PURCHASED_WEBINAR: string;
-    UPLOAD_WEBINAR: string;
-    GET_ALL_WEBINAR_ADMIN: string;
-}
+
 
 export const authEndpoint: AuthEndpoints = {
-    LOGIN_API: `${BASE_URL}/user/login`,
+    SIGN_UP_API:`${BASE_URL}/auth/signup`,
+    LOGIN_API: `${BASE_URL}/auth/login`,
     CHANGE_PASSWORD_API: `${BASE_URL}/user/change-password`,
     RESET_PASSWORD_API: `${BASE_URL}/user/reset-password`,
     FORGOT_PASSWORD_API: `${BASE_URL}/user/forget-password`,
     GET_USER_DATA: `${BASE_URL}/user/get-user-data`,
 };
 
-export const company: CompanyEndpoints = {
-    ADD_COMPANY: `${BASE_URL}/company/add-company`,
-    GET_COMPANY: `${BASE_URL}/company/get-company`,
-    DELETE_COMPANY: `${BASE_URL}/company/delete-company`,
-    UPDATE_COMPANY: `${BASE_URL}/company/update-company`,
-};
-
-export const queryEndpoint: QueryEndpoints = {
-    SUBMIT_QUERY: `${BASE_URL}/query/submit`,
-    GET_USER_QUERY: `${BASE_URL}/query/my-queries`,
-    GET_ADMIN_QUERY: `${BASE_URL}/query/all-queries`,
-    ADMIN_QUERY_UPDATE: `${BASE_URL}/query/update-status`,
-    ADMIN_QUERY_RESOLVE: `${BASE_URL}/query/resolve-query`,
-};
 
 export const mockTest: MockTestEndpoints = {
     SAVE_MOCK_TEST_DRAFT_API: `${BASE_URL}/mock-test/save-draft`,

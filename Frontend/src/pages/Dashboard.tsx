@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useTestStore } from '../store/testStore';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Button from '../components/Button';
 import { PlusCircle, FileText, Clock, Users, CheckCircle, XCircle } from 'lucide-react';
 import { Test } from '../types';

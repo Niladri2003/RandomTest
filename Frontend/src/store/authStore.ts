@@ -6,7 +6,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string, password: string, role: 'teacher' | 'student') => Promise<void>;
+  signup: (name: string, email: string, password: string,confirmPassword:string, role: 'teacher' | 'student') => Promise<void>;
   logout: () => void;
 }
 
@@ -91,14 +91,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
   
-  signup: async (name: string, email: string, password: string, role: 'teacher' | 'student') => {
+  signup: async (name: string, email: string,confirmPassword:string, password: string, role: 'teacher' | 'student') => {
     set({ isLoading: true });
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     const newUser: User = {
-      id: String(mockUsers.length + 1),
       name,
       email,
       role
