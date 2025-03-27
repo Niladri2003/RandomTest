@@ -16,6 +16,7 @@ import ProfilePage from "./pages/ProfilePage.tsx";
 import AuthCallback from "./pages/AuthCallback.tsx";
 
 import {DashboardLayout} from "./pages/index.ts"
+import PageNotFound from "./pages/PageNotFound.tsx";
 
 
 // Protected route component
@@ -63,7 +64,7 @@ function App() {
 
           {/* Dashboard routes using layout + nested routing */}
           <Route
-              path="/dashboard"
+              path="/dashboard/*"
               element={
                   <ProtectedRoute>
                       <DashboardLayout />
@@ -104,7 +105,7 @@ function App() {
 
 
           {/* Fallback route */}
-        <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<PageNotFound/>}/>
       </Routes>
     </Router>
   );

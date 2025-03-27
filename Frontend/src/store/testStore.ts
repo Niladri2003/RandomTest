@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { Test, Question } from '../types';
+import {create} from 'zustand';
+import {Question, Test} from '../types';
 
 interface TestState {
   tests: Test[];
@@ -22,11 +22,71 @@ const mockTests: Test[] = [
   {
     id: '1',
     title: 'JavaScript Basics',
-    description: 'Test your knowledge of JavaScript fundamentals',
+    description: 'Test your knowledge of JavaScript fundamentals lorem ipsum dolor sit amet. lorem',
     createdBy: '1',
     createdAt: new Date('2023-01-15'),
     duration: 30,
     questions: [
+      {
+        id: '1',
+        type: 'mcq',
+        question: 'What is JavaScript?',
+        options: [
+          'A programming language',
+          'A markup language',
+          'A styling language',
+          'A database'
+        ],
+        correctAnswer: 0
+      },
+      {
+        id: '1',
+        type: 'mcq',
+        question: 'What is JavaScript?',
+        options: [
+          'A programming language',
+          'A markup language',
+          'A styling language',
+          'A database'
+        ],
+        correctAnswer: 0
+      },
+      {
+        id: '1',
+        type: 'mcq',
+        question: 'What is JavaScript?',
+        options: [
+          'A programming language',
+          'A markup language',
+          'A styling language',
+          'A database'
+        ],
+        correctAnswer: 0
+      },
+      {
+        id: '1',
+        type: 'mcq',
+        question: 'What is JavaScript?',
+        options: [
+          'A programming language',
+          'A markup language',
+          'A styling language',
+          'A database'
+        ],
+        correctAnswer: 0
+      },
+      {
+        id: '1',
+        type: 'mcq',
+        question: 'What is JavaScript?',
+        options: [
+          'A programming language',
+          'A markup language',
+          'A styling language',
+          'A database'
+        ],
+        correctAnswer: 0
+      },
       {
         id: '1',
         type: 'mcq',
