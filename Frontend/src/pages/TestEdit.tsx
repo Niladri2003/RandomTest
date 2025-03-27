@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useTestStore } from '../store/testStore';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useTestStore} from '../store/testStore';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { Save, Trash2, Plus, Copy, FileText, Code, Share2 } from 'lucide-react';
-import { Test, Question } from '../types';
+import {Code, Copy, FileText, Plus, Save, Share2, Trash2} from 'lucide-react';
+import {Question, Test} from '../types';
 
 const TestEdit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -180,18 +178,18 @@ const TestEdit: React.FC = () => {
   if (isLoading && !test) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        {/*<Navbar />*/}
         <div className="flex-grow flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
         </div>
-        <Footer />
+        {/*<Footer />*/}
       </div>
     );
   }
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {/*<Navbar />*/}
       
       <div className="flex-grow bg-gray-50 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

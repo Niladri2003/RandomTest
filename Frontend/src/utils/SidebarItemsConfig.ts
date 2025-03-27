@@ -1,9 +1,4 @@
-
-import {
-    Inbox,
-    FileText,
-    Tags
-} from 'lucide-react';
+import {FileText, Inbox, Tags} from 'lucide-react';
 
 // SidebarItemsConfig.ts
 
@@ -14,7 +9,7 @@ const baseSidebarItems = [
         to: '/dashboard',
         children: [
             { text: 'Explore', to: '/dashboard' },
-            { text: 'Create Test', to: '/create-test', roles: ['teacher'] },
+            {text: 'Create Test', to: '/dashboard/create-test', roles: ['teacher']},
             { text: 'Recent', to: '/explore/recent' },
             { text: 'Popular', to: '/explore/popular' },
         ],

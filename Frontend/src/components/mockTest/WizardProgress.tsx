@@ -1,5 +1,5 @@
 import React from "react";
-import { Check } from "lucide-react";
+import {Check} from "lucide-react";
 
 interface Step {
     title: string;
@@ -22,7 +22,7 @@ const WizardProgress: React.FC<WizardProgressProps> = ({ steps, currentStep }) =
                                 className={`h-0.5 w-full ${
                                     index <= currentStep ? "bg-blue-600" : "bg-gray-200"
                                 }`}
-                                style={{ marginLeft: index === 0 ? "50%" : "0" }} // Hide left part for index 0
+                                style={{marginLeft: index === 0 ? "0" : "0"}} // Hide left part for index 0
                             />
                         </div>
 

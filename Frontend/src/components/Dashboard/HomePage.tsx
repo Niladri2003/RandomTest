@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore.ts';
-import { useTestStore } from '../../store/testStore.ts';
-import Navbar from '../../components/Navbar';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useAuthStore} from '../../store/authStore.ts';
+import {useTestStore} from '../../store/testStore.ts';
 import Button from '../../components/Button';
-import { PlusCircle, FileText, Clock, Users, CheckCircle, XCircle } from 'lucide-react';
-import { Test } from '../../types';
+import {CheckCircle, Clock, FileText, PlusCircle, Users, XCircle} from 'lucide-react';
+import {Test} from '../../types';
 
 const HomePage: React.FC = () => {
     const { user } = useAuthStore();
@@ -31,7 +30,7 @@ const HomePage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Navbar />
+            {/*<Navbar />*/}
 
             <div className="flex-grow bg-gray-50 py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 
 interface Section {
     title: string;
@@ -35,7 +35,7 @@ const SectionForm: React.FC<SectionFormProps> = ({ onSave, onCancel, initialData
     };
 
     return (
-        <form onSubmit={handleSubmit} className="border rounded-md p-4">
+        <form onSubmit={handleSubmit} className=" rounded-md p-4">
             <h3 className="text-lg font-semibold mb-4">
                 {initialData ? "Edit Section" : "New Section"}
             </h3>

@@ -1,5 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { User, Settings, LogOut } from 'lucide-react';
+import React, {useEffect, useRef} from 'react';
+import {LogOut, Settings, User} from 'lucide-react';
+import {useAuthStore} from "../../store/authStore.ts";
+import {Link, useNavigate} from "react-router-dom";
 
 interface ProfileMenuProps {
     isCollapsed: boolean;
@@ -13,7 +15,13 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({
                                                             setIsProfileMenuOpen,
                                                         }) => {
     const menuRef = useRef<HTMLDivElement>(null);
+    const {logout} = useAuthStore();
+    const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -51,16 +59,20 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({
                 } transition-all duration-200 ease-out`}
                 style={{ pointerEvents: isProfileMenuOpen ? 'auto' : 'none' }}
             >
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <User className="h-4 w-4 mr-2" />
-                    Profile
-                </button>
+                <Link to="/profile">
+                    <button
+                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                        <User className="h-4 w-4 mr-2"/>
+                        Profile
+                    </button>
+                </Link>
                 <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center">
                     <Settings className="h-4 w-4 mr-2" />
                     Settings
                 </button>
                 <hr className="my-1" />
-                <button className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50 flex items-center">
+                <button onClick={handleLogout}
+                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50 flex items-center">
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
                 </button>

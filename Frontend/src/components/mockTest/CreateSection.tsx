@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Edit2, Plus, Trash2 } from "lucide-react";
+import React, {useState} from "react";
+import {Edit2, Plus, Trash2} from "lucide-react";
 import SectionForm from "./sections/SectionForm.tsx";
 import {SectionDev as Section} from "../../utils/types.ts";
+import {Button} from "@chakra-ui/react"
 
 interface CreateSectionProps {
     data: { sections: Section[] };
@@ -109,13 +110,13 @@ const CreateSection: React.FC<CreateSectionProps> = ({ data, onUpdate, onNext, o
                 <button onClick={onBack} className="px-4 py-2 border rounded-md hover:bg-gray-50 text-black">
                     Back
                 </button>
-                <button
+                <Button
                     onClick={onNext}
                     disabled={!data.sections?.length}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
                 >
                     Next: Add Questions
-                </button>
+                </Button>
             </div>
         </div>
     );

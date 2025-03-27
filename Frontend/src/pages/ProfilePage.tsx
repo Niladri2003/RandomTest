@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
-import { useTestStore } from '../store/testStore';
+import React, {useEffect, useState} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import {useAuthStore} from '../store/authStore';
+import {useTestStore} from '../store/testStore';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { User, Test } from '../types';
-import { Edit2, Mail, Building2, Calendar, Award, FileText, CheckCircle, Save } from 'lucide-react';
+import {Test, User} from '../types';
+import {Award, Building2, Calendar, CheckCircle, Edit2, FileText, Mail, Save} from 'lucide-react';
 
 const ProfilePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -79,9 +79,9 @@ const ProfilePage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Navbar />
 
-            <div className="flex-grow bg-gray-50 py-10">
+
+        <div className="flex-grow bg-gray-50 py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
                         {/* Profile Header */}
@@ -273,8 +273,6 @@ const ProfilePage: React.FC = () => {
                     </div>
                 </div>
             </div>
-
-            <Footer />
         </div>
     );
 };

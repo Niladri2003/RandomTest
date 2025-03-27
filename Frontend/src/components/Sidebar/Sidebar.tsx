@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-    ChevronLeft,
-    ChevronRight,
-    LayoutDashboard
-} from 'lucide-react';
-import { SidebarItem } from './SidebarItem';
-import { ProfileMenu } from './ProfileMenu';
+import {ChevronLeft, ChevronRight, LayoutDashboard} from 'lucide-react';
+import {SidebarItem} from './SidebarItem';
+import {ProfileMenu} from './ProfileMenu';
 import {getSidebarItems} from "../../utils/SidebarItemsConfig.ts"
 import {useAuthStore} from "../../store/authStore.ts";
 
@@ -30,6 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                 }) => {
     const{user}=useAuthStore();
      const sidebarItem=getSidebarItems(user?.role??'student');
+    console.log(sidebarItem)
     // const sidebarItem=baseSidebarItems[user?.role??'student']?.sidebar||[];
     return (
         <div
@@ -43,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {!isCollapsed && (
                     <div className="flex items-center">
 
-                        <LayoutDashboard />
+                        <LayoutDashboard className={"text-black"}/>
                         <span className="ml-2 font-semibold text-gray-800">Dashboard</span>
                     </div>
                 )}
@@ -51,7 +48,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onClick={() => setIsCollapsed(!isCollapsed)}
                     className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
                 >
-                    {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+                    {isCollapsed ? <ChevronRight className="h-5 w-5 text-black"/> :
+                        <ChevronLeft className="h-5 w-5 text-black"/>}
                 </button>
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -99,7 +99,7 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
                            onChange('description', content);
                        }}
                        modules={modules}
-                       className="h-[300px]"
+                       className="h-[300px] text-black"
 
                    />
                </div>
@@ -112,7 +112,7 @@ const QuestionBasicFields: React.FC<QuestionBasicFieldsProps> = ({
                            onChange('explanation', content);
                        }}
                        modules={modules}
-                       className="h-[150px]"
+                       className="h-[150px] text-black"
                    />
                </div>
            </div>

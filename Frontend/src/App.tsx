@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthStore } from './store/authStore';
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {useAuthStore} from './store/authStore';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -15,8 +15,8 @@ import RankingPage from "./pages/RankingPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import AuthCallback from "./pages/AuthCallback.tsx";
 
-import {DashboardLayout}  from "./pages/index.ts"
-import RoleBasedRoutes from "./Routing/RoleBasedRoutes.tsx";
+import {DashboardLayout} from "./pages/index.ts"
+
 
 // Protected route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -48,6 +48,7 @@ function App() {
     const { isAuthenticated } = useAuthStore();
     // console.log(RoleBasedRoutes)
   return (
+
     <Router>
       <Routes>
         {/* Public routes */}
@@ -59,17 +60,17 @@ function App() {
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/auth/callback" element={<AuthCallback/>} />
 
-         Protected routes
+
           {/* Dashboard routes using layout + nested routing */}
           <Route
-              path="/"
+              path="/dashboard"
               element={
                   <ProtectedRoute>
                       <DashboardLayout />
                   </ProtectedRoute>
               }
           >
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="" element={<Dashboard/>}/>
               <Route path="profile" element={<ProfilePage />} />
               <Route path="test/:id" element={<TestView />} />
               <Route

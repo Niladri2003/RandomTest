@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
+import {useRef, useState} from 'react';
 import QuestionForm from './questions/QuestionForm';
 import QuestionList from './questions/QuestionList';
-import { FileSpreadsheet, PlusCircle } from 'lucide-react';
-import { parseExcelQuestions } from '../../../utils/parseExcelQuestions.tsx';
-import {SectionDev as Section ,QuestionDev as Question } from "../../../utils/types.ts";
+import {FileSpreadsheet, PlusCircle} from 'lucide-react';
+import {parseExcelQuestions} from '../../../utils/parseExcelQuestions.tsx';
+import {QuestionDev as Question, SectionDev as Section} from "../../../utils/types.ts";
 
 
 // interface Question {
@@ -165,10 +165,10 @@ const AddQuestions: React.FC<AddQuestionsProps> = ({ data, onUpdate, onNext, onB
                         <PlusCircle size={20} />
                         Add Question Manually
                     </button>
-                   <div className={"flex flex-row w-[30%] gap-4"}>
+                    <div className={"flex flex-row w-[40%] h-[50px] gap-4"}>
                        <button
                            onClick={() => fileInputRef.current?.click()}
-                           className="flex-1 flex items-center justify-center gap-2 p-4 border-2 border-dashed rounded-md text-gray-500 hover:text-gray-700 hover:border-gray-400"
+                           className="w-[20%] flex-1 flex items-center justify-center gap-2 p-4 border-2 border-dashed rounded-md text-gray-500 hover:text-gray-700 hover:border-gray-400"
                            disabled={isExcelProcessing} // Disable button while processing
                        >
                            <FileSpreadsheet size={20} />

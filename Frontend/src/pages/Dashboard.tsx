@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
-import { useTestStore } from '../store/testStore';
-import Navbar from '../components/Navbar';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useAuthStore} from '../store/authStore';
+import {useTestStore} from '../store/testStore';
 import Button from '../components/Button';
-import { PlusCircle, FileText, Clock, Users, CheckCircle, XCircle } from 'lucide-react';
-import { Test } from '../types';
+import {CheckCircle, Clock, FileText, PlusCircle, Users, XCircle} from 'lucide-react';
+import {Test} from '../types';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
@@ -31,7 +30,7 @@ const Dashboard: React.FC = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {/*<Navbar />*/}
       
       <div className="flex-grow bg-gray-50 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,7 +40,7 @@ const Dashboard: React.FC = () => {
             </h1>
             
             {user?.role === 'teacher' && (
-              <Link to="/create-test">
+                <Link to="/dashboard/create-test">
                 <Button>
                   <PlusCircle className="h-5 w-5 mr-2" />
                   Create New Test
@@ -117,8 +116,8 @@ const Dashboard: React.FC = () => {
               <ul className="divide-y divide-gray-200">
                 {tests.map((test) => (
                   <li key={test.id}>
-                    <Link 
-                      to={user?.role === 'teacher' ? `/test/${test.id}/edit` : `/test/${test.id}`}
+                    <Link
+                        to={user?.role === 'teacher' ? `/dashboard/test/${test.id}/edit` : `/test/${test.id}`}
                       className="block hover:bg-gray-50"
                     >
                       <div className="px-4 py-4 sm:px-6">
