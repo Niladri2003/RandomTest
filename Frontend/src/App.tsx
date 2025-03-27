@@ -17,6 +17,7 @@ import AuthCallback from "./pages/AuthCallback.tsx";
 
 import {DashboardLayout} from "./pages/index.ts"
 import PageNotFound from "./pages/PageNotFound.tsx";
+import TestStore from "./pages/TestStore.tsx";
 
 
 // Protected route component
@@ -54,12 +55,15 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/test-window" element={<TestWindow/>} />
+
         <Route path="/test-window-test" element={<TestView/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/auth/callback" element={<AuthCallback/>} />
+          <Route path="/store" element={<TestStore/>}/>
+          <Route path="/test-window/:id" element={<TestWindow/>}/>
+          {/*<Route path="/test-window/:id" element={<ProtectedRoute>element={<TestWindow/>}</ProtectedRoute>} />*/}
 
 
           {/* Dashboard routes using layout + nested routing */}
@@ -90,6 +94,15 @@ function App() {
                       </TeacherRoute>
                   }
               />
+              <Route
+                  path="ranking"
+                  element={
+                      <TeacherRoute>
+                          <RankingPage/>
+                      </TeacherRoute>
+                  }
+              />
+
           </Route>
         {/*  <Route*/}
         {/*      path="/*"*/}

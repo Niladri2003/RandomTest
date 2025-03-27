@@ -58,9 +58,10 @@ export interface UserAuth {
 export interface Ranking {
     userId: string;
     userName: string;
+    score: number;
     profilePicture?: string;
     organization?: string;
-    totalScore: number;
+
     testsCompleted: number;
     averageScore: number;
     rank: number;

@@ -10,7 +10,7 @@ const baseSidebarItems = [
         children: [
             { text: 'Explore', to: '/dashboard' },
             {text: 'Create Test', to: '/dashboard/create-test', roles: ['teacher']},
-            { text: 'Recent', to: '/explore/recent' },
+            {text: 'Ranking', to: '/dashboard/ranking'},
             { text: 'Popular', to: '/explore/popular' },
         ],
     },

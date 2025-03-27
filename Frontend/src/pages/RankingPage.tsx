@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useRankingStore } from '../store/rankingStore';
-import { useAuthStore } from '../store/authStore';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { Award, Search, ChevronUp, ChevronDown, Medal } from 'lucide-react';
-import { Ranking } from '../utils/types.ts';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useRankingStore} from '../store/rankingStore';
+import {useAuthStore} from '../store/authStore';
+import {Award, ChevronDown, ChevronUp, Medal, Search} from 'lucide-react';
+import {Ranking} from '../utils/types.ts';
 
 const RankingPage: React.FC = () => {
     const { getRankings, isLoading } = useRankingStore();
@@ -19,6 +17,7 @@ const RankingPage: React.FC = () => {
     useEffect(() => {
         const fetchRankings = async () => {
             const data = await getRankings();
+            console.log(data)
             setRankings(data);
 
             if (user) {
@@ -71,10 +70,10 @@ const RankingPage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Navbar />
+
 
             <div className="flex-grow bg-gray-50 py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className=" mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-900 flex items-center">
                             <Award className="h-8 w-8 mr-2 text-indigo-600" />
@@ -87,7 +86,7 @@ const RankingPage: React.FC = () => {
                             </div>
                             <input
                                 type="text"
-                                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="block w-full pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 placeholder="Search by name"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -156,6 +155,10 @@ const RankingPage: React.FC = () => {
                                                 )}
                                             </div>
                                         </th>
+                                        <th scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Marks
+                                        </th>
                                         <th
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
@@ -179,7 +182,7 @@ const RankingPage: React.FC = () => {
                                             className={ranking.userId === user?.id ? "bg-indigo-50" : "hover:bg-gray-50"}
                                         >
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center justify-center">
+                                                <div className="flex items-center justify-center text-black">
                                                     {getRankBadge(ranking.rank)}
                                                 </div>
                                             </td>
@@ -209,6 +212,9 @@ const RankingPage: React.FC = () => {
                                                 <div className="text-sm text-gray-900">{ranking.averageScore.toFixed(1)}%</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {ranking.score}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {ranking.testsCompleted}
                                             </td>
                                         </tr>
@@ -221,7 +227,7 @@ const RankingPage: React.FC = () => {
                 </div>
             </div>
 
-            <Footer />
+
         </div>
     );
 };

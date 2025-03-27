@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { Ranking, TestResult } from '../utils/types.ts';
+import {create} from 'zustand';
+import {Ranking, TestResult} from '../utils/types.ts';
 
 interface RankingState {
     rankings: Ranking[];
@@ -123,20 +123,22 @@ const generateMockRankings = (): Ranking[] => {
             acc[result.userId] = {
                 totalScore: 0,
                 testsCompleted: 0,
-                totalPercentage: 0
+                totalPercentage: 0,
+                score: 0,
             };
         }
 
         acc[result.userId].totalScore += result.score;
         acc[result.userId].testsCompleted += 1;
+        acc[result.userId].score = result.score;
         acc[result.userId].totalPercentage += (result.score / result.maxScore) * 100;
-
+        console.log(acc);
         return acc;
-    }, {} as Record<string, { totalScore: number; testsCompleted: number; totalPercentage: number }>);
+    }, {} as Record<string, { totalScore: number; testsCompleted: number; totalPercentage: number, score: number }>);
 
     // Create rankings for all users (including those without test results)
     const allRankings = mockUserData.map(user => {
-        const userScore = userScores[user.userId] || { totalScore: 0, testsCompleted: 0, totalPercentage: 0 };
+        const userScore = userScores[user.userId] || {totalScore: 0, testsCompleted: 0, totalPercentage: 0, score: 0};
 
         return {
             userId: user.userId,
@@ -144,6 +146,7 @@ const generateMockRankings = (): Ranking[] => {
             profilePicture: user.profilePicture,
             organization: user.organization,
             totalScore: userScore.totalScore,
+            score: userScore.score,
             testsCompleted: userScore.testsCompleted,
             averageScore: userScore.testsCompleted > 0
                 ? userScore.totalPercentage / userScore.testsCompleted
